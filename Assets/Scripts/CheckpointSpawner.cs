@@ -8,6 +8,7 @@ public class CheckpointSpawner : MonoBehaviour
     [SerializeField] public GameObject checkpointSpherePrefab;
     [SerializeField] public string filePath = "Assets/Scripts/sample_track.txt";
 
+    private float inchScale = 39.3701f;
     void Start()
     {
         List<Vector3> checkpoints = ParseFile(filePath);
@@ -46,7 +47,7 @@ public class CheckpointSpawner : MonoBehaviour
             // Message with parsed checkpoint coordinates
             Debug.Log(pos);
             
-            positions.Add(pos);
+            positions.Add(pos / inchScale);
         }
         return positions;
     }

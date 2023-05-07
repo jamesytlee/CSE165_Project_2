@@ -299,9 +299,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 207ff1aa9aa9b1f4a85a064eeb011d1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  checkpointSpherePrefab: {fileID: 7541335145270593911, guid: b9c399d7ef4279e4a84c3d4b92d7448f, type: 3}
+  checkpointSpherePrefab: {fileID: 8870839140484431870, guid: b2ef92a32e6ceb14b863fa9ecb009b73, type: 3}
   filePath: Assets/Scripts/sample_track.txt
-  scaleFactor: 0.02564103
 --- !u!1001 &1344264774
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -315,15 +314,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 10b0f870c6340c34495d707d7ec89785, type: 3}
       propertyPath: m_LocalScale.x
-      value: 39.37
+      value: 0.02540005
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 10b0f870c6340c34495d707d7ec89785, type: 3}
       propertyPath: m_LocalScale.y
-      value: 39.37
+      value: 0.02540005
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 10b0f870c6340c34495d707d7ec89785, type: 3}
       propertyPath: m_LocalScale.z
-      value: 39.37
+      value: 0.02540005
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 10b0f870c6340c34495d707d7ec89785, type: 3}
       propertyPath: m_LocalPosition.x
