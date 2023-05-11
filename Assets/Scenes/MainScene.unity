@@ -123,6 +123,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!4 &66176306 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 341548596437131480, guid: f39a9d103c4129b42a53567f6cd8356a, type: 3}
+  m_PrefabInstance: {fileID: 1738949956}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &254867602
 GameObject:
   m_ObjectHideFlags: 0
@@ -979,6 +984,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4044695831351335}
     m_Modifications:
+    - target: {fileID: 1180085929413491868, guid: f39a9d103c4129b42a53567f6cd8356a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1636647054044697617, guid: f39a9d103c4129b42a53567f6cd8356a, type: 3}
       propertyPath: m_TagString
       value: PlayerHand
@@ -1241,6 +1250,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   throttle: {fileID: 758430235}
+  rightHand: {fileID: 66176306}
   speedMultiplier: 2
   maxSpeed: 5
 --- !u!1 &231140861512243978

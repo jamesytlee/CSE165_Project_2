@@ -4,15 +4,25 @@ using UnityEngine;
 
 public class AircraftController : MonoBehaviour
 {
-    public Transform throttle;
-    public float speedMultiplier = 8f;
-    public float maxSpeed = 20f;
+    [SerializeField] public Transform throttle;
+    [SerializeField] public Transform rightHand;
+
+    public float speedMultiplier = 15f;
+    public float maxSpeed = 50f;
+
+    private Vector3 handRotation; // initial rotation of the right hand
+    private float updateInterval = 1f; // update every 1 seconds
+
+    private void Start()
+    {
+        StartCoroutine(UpdateRotation());
+    }
 
     private void Update()
     {
         // Get the x-axis rotation of the throttle
         float throttleRotation = throttle.localEulerAngles.x;
-        
+
         if (throttleRotation > 180)
         {
             throttleRotation -= 360;
@@ -32,5 +42,24 @@ public class AircraftController : MonoBehaviour
 
         // Apply the movement to the aircraft's Transform
         transform.Translate(movement, Space.World);
+    }
+
+    IEnumerator UpdateRotation()
+    {
+        while (true)
+        {
+            // Hand to Aircraft Rotation
+            // Store rotation of right hand
+            handRotation = rightHand.eulerAngles;
+
+            // Convert hand rotation to aircraft rotation
+            Vector3 aircraftRotation = new Vector3(-handRotation.z, 0, handRotation.x);
+
+            // Apply aircraft rotation
+            transform.eulerAngles = aircraftRotation;
+
+            // Wait for the defined interval before updating rotation again
+            yield return new WaitForSeconds(updateInterval);
+        }
     }
 }
