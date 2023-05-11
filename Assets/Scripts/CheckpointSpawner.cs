@@ -3,12 +3,25 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
+public class Checkpoint : MonoBehaviour
+{
+    public int ID;
+    public Transform transform;
+
+    public Checkpoint(int id, Transform transform)
+    {
+        ID = id;
+        this.transform = transform;
+    }
+}
+
 public class CheckpointSpawner : MonoBehaviour
 {
     [SerializeField] public GameObject checkpointSpherePrefab;
     [SerializeField] public string filePath = "Assets/Scripts/sample_track.txt";
-
+    public Queue<Checkpoint> checkpointQueue = new Queue<Checkpoint>();
     private float inchScale = 39.3701f;
+
     void Start()
     {
         List<Vector3> checkpoints = ParseFile(filePath);
@@ -20,15 +33,24 @@ public class CheckpointSpawner : MonoBehaviour
             checkpointSphere.transform.SetParent(transform);
             checkpointSphere.name = "Checkpoint " + (i + 1);
 
+            // Instantiate checkpoint and add to queues
+            Checkpoint checkpointReference = new Checkpoint(i, checkpointSphere.transform);
+            checkpointQueue.Enqueue(checkpointReference);
+
             // Message with spawned checkpoint names
             Debug.Log(checkpointSphere.name);
         }
     }
 
+    void Update()
+    {
+        // Remove checkpoints from Queue as they are reached
+    }
+
     /*
      * Parses checkpoint text file and instantiates checkpoint sphere prefabs at coordinates.
      */
-    List<Vector3> ParseFile(string filePath)
+    public List<Vector3> ParseFile(string filePath)
     {
         string content = LoadFileContent(filePath);
         if (content == null)
@@ -41,13 +63,13 @@ public class CheckpointSpawner : MonoBehaviour
         for (int i = 0; i < lines.Length; i++)
         {
             string[] coords = lines[i].Split(' ');
-            Vector3 pos = new Vector3(float.Parse(coords[0]),
-            float.Parse(coords[1]), float.Parse(coords[2]));
-            
+            Vector3 pos = new Vector3(float.Parse(coords[0]) / inchScale,
+            float.Parse(coords[1]) / inchScale, float.Parse(coords[2]) / inchScale);
+
             // Message with parsed checkpoint coordinates
             Debug.Log(pos);
-            
-            positions.Add(pos / inchScale);
+
+            positions.Add(pos);
         }
         return positions;
     }
@@ -68,4 +90,24 @@ public class CheckpointSpawner : MonoBehaviour
         }
     }
 
+    public void EnqueueCheckpoint(Checkpoint checkpoint)
+    {
+        checkpointQueue.Enqueue(checkpoint);
+    }
+
+    public void DequeueCheckpoint()
+    {
+        if (checkpointQueue.Count == 0)
+            throw new System.InvalidOperationException("Checkpoint Queue is Empty");
+
+        checkpointQueue.Dequeue();
+    }
+
+    public Checkpoint PeekCheckpoint()
+    {
+        if (checkpointQueue.Count == 0)
+            throw new System.InvalidOperationException("Checkpoint Queue is empty");
+
+        return checkpointQueue.Peek();
+    }
 }
