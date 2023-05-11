@@ -6,12 +6,12 @@ using UnityEngine;
 public class CheckpointSpawner : MonoBehaviour
 {
     [SerializeField] public GameObject checkpointSpherePrefab;
-    [SerializeField] public string filePath = "Assets/Scripts/sample_track.txt";
+    [SerializeField] public TextAsset checkpointFile;
 
     private float inchScale = 39.3701f;
     void Start()
     {
-        List<Vector3> checkpoints = ParseFile(filePath);
+        List<Vector3> checkpoints = ParseFile(checkpointFile);
 
         for (int i = 0; i < checkpoints.Count; i++)
         {
@@ -28,9 +28,9 @@ public class CheckpointSpawner : MonoBehaviour
     /*
      * Parses checkpoint text file and instantiates checkpoint sphere prefabs at coordinates.
      */
-    List<Vector3> ParseFile(string filePath)
+    List<Vector3> ParseFile(TextAsset checkpointFile)
     {
-        string content = LoadFileContent(filePath);
+        string content = checkpointFile.ToString();
         if (content == null)
         {
             return new List<Vector3>();
@@ -51,21 +51,4 @@ public class CheckpointSpawner : MonoBehaviour
         }
         return positions;
     }
-
-    /*
-     * Loads file context in text format from the provided file path.
-     */
-    private string LoadFileContent(string filePath)
-    {
-        if (File.Exists(filePath))
-        {
-            return File.ReadAllText(filePath);
-        }
-        else
-        {
-            Debug.LogError("File not found: " + filePath);
-            return null;
-        }
-    }
-
 }
