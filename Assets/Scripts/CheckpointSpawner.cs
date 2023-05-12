@@ -31,7 +31,8 @@ public class CheckpointSpawner : MonoBehaviour
             // Instantiate checkpoint sphere at parsed position
             GameObject checkpointSphere = Instantiate(checkpointSpherePrefab, checkpoints[i], Quaternion.identity);
             checkpointSphere.transform.SetParent(transform);
-            checkpointSphere.name = "Checkpoint " + (i + 1);
+            int checkpointNumber = i + 1;
+            checkpointSphere.name = checkpointNumber.ToString();
 
             // Add checkpoint references to queue
             Checkpoint checkpointRef = new Checkpoint(i + 1, checkpointSphere.transform);
@@ -77,13 +78,15 @@ public class CheckpointSpawner : MonoBehaviour
         checkpointQueue.Enqueue(checkpoint);
     }
 
-    public void DequeueCheckpoint()
+    public Checkpoint DequeueCheckpoint()
     {
         if (checkpointQueue.Count == 0)
             throw new System.InvalidOperationException("Checkpoint Queue is Empty");
 
         Checkpoint passedCheckpoint = checkpointQueue.Dequeue();
         Debug.Log("Checkpoint " + passedCheckpoint.ID + " has been passed. Deleting it from queue.");
+
+        return passedCheckpoint;
     }
 
     public Checkpoint PeekCheckpoint()

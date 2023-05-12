@@ -16,8 +16,11 @@ public class ChildColliderHandler : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Checkpoint"))
         {
-            aircraft.HandleCheckpointCollision();
-        } else if (other.gameObject.CompareTag("Map")) {
+            int i = int.Parse(other.gameObject.name);
+            aircraft.HandleCheckpointCollision(i);
+        } 
+        else if (other.gameObject.CompareTag("Map")) 
+        {
             StartCoroutine(aircraft.Respawn(aircraft.lastCheckpoint));
         }
     }

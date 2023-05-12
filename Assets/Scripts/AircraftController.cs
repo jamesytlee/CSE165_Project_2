@@ -11,6 +11,7 @@ public class AircraftController : MonoBehaviour
 
     public CheckpointSpawner checkpointManager;
     public Transform lastCheckpoint;
+    private int checkpointCounter = 1;
 
     private void Start()
     {
@@ -33,7 +34,7 @@ public class AircraftController : MonoBehaviour
         }
         if (checkpointManager != null && checkpointManager.checkpointQueue.Count > 0)
         {
-            lastCheckpoint = checkpointManager.checkpointQueue.Peek().position;
+            //lastCheckpoint = checkpointManager.checkpointQueue.Peek().position;
             Throttle();
         }
         else
@@ -52,6 +53,7 @@ public class AircraftController : MonoBehaviour
 
         // Set the position
         transform.position = respawnCheckpoint.position;
+        transform.eulerAngles = new Vector3(0, 0, 0);
         Debug.Log("The aircraft has spawned at checkpoint located at " + respawnCheckpoint.position);
 
         // Wait for 3 seconds
@@ -65,11 +67,16 @@ public class AircraftController : MonoBehaviour
     /*
      * Function for handling child object collisions
      */
-    public void HandleCheckpointCollision()
+    public void HandleCheckpointCollision(int checkpointNumber)
     {
         if (checkpointManager != null && checkpointManager.checkpointQueue.Count > 0)
         {
-            checkpointManager.DequeueCheckpoint();
+            // Enforces checkpoint order through comparing counter and ID
+            if (checkpointCounter == checkpointManager.PeekCheckpoint().ID && checkpointCounter == checkpointNumber)
+            {
+                lastCheckpoint = checkpointManager.DequeueCheckpoint().position;
+                checkpointCounter++;
+            }
         }
     }
 

@@ -546,6 +546,23 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7415146172554156808, guid: f39a9d103c4129b42a53567f6cd8356a, type: 3}
   m_PrefabInstance: {fileID: 1738949956}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &802482036 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 10b0f870c6340c34495d707d7ec89785, type: 3}
+  m_PrefabInstance: {fileID: 1344264774}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &802482038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 802482036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eaabd104a8551484db2066c83ec345cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &805868328
 GameObject:
   m_ObjectHideFlags: 0
@@ -2868,6 +2885,7 @@ MonoBehaviour:
   speedMultiplier: 40
   maxSpeed: 50
   checkpointManager: {fileID: 805868330}
+  lastCheckpoint: {fileID: 0}
 --- !u!54 &4044695831351337
 Rigidbody:
   m_ObjectHideFlags: 0
