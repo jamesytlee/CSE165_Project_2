@@ -82,7 +82,8 @@ public class CheckpointSpawner : MonoBehaviour
         if (checkpointQueue.Count == 0)
             throw new System.InvalidOperationException("Checkpoint Queue is Empty");
 
-        checkpointQueue.Dequeue();
+        Checkpoint passedCheckpoint = checkpointQueue.Dequeue();
+        Debug.Log("Checkpoint " + passedCheckpoint.ID + " has been passed. Deleting it from queue.");
     }
 
     public Checkpoint PeekCheckpoint()

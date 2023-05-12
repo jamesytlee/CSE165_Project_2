@@ -21,7 +21,7 @@ public class AircraftController : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Checkpoint Manager is not assigned or checkpointQueue is empty.");
+            Debug.Log("Checkpoint Manager is not assigned or checkpointQueue is empty.");
         }
     }
 
@@ -38,7 +38,7 @@ public class AircraftController : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Checkpoint Manager is not assigned or checkpointQueue is empty.");
+            Debug.Log("Checkpoint Manager is not assigned or checkpointQueue is empty.");
         }
     }
 
@@ -60,6 +60,17 @@ public class AircraftController : MonoBehaviour
 
         // Unlock the aircraft after 3 seconds
         isLocked = false;
+    }
+
+    /*
+     * Function for handling child object collisions
+     */
+    public void HandleCheckpointCollision()
+    {
+        if (checkpointManager != null && checkpointManager.checkpointQueue.Count > 0)
+        {
+            checkpointManager.DequeueCheckpoint();
+        }
     }
 
     /*
