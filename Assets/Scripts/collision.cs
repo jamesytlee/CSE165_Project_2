@@ -4,28 +4,33 @@ using UnityEngine;
 
 public class collision : MonoBehaviour
 {
-    private bool isWaiting = false;
-    private float waitStartTime = 0f;
-    [SerializeField] public CheckpointSpawner checkpointSpawner;
+    public GameObject player;
+    public string collisionTag = "Collision";
 
+    private CheckpointSpawner checkpointSpawner;
 
-    void OnCollisionEnter(UnityEngine.Collision collision)
+    void Start()
     {
-        Debug.Log("Collision detected");
-        if (collision.gameObject.CompareTag("collision") && !isWaiting)
+        checkpointSpawner = FindObjectOfType<CheckpointSpawner>();
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag(collisionTag))
         {
-            isWaiting = true;
-            waitStartTime = Time.time;
+            StartCoroutine(MoveToCheckpoint());
         }
     }
 
-    void Update()
+    private IEnumerator MoveToCheckpoint()
     {
-        if (isWaiting && Time.time >= waitStartTime + 3.0f)
+        yield return new WaitForSeconds(3f);
+
+        if (checkpointSpawner.checkpointQueue.Count > 0)
         {
-            Debug.Log("Waiting for move...");
-            isWaiting = false;
-            transform.position = checkpointSpawner.checkpointQueue.Peek().transform.position;
+            Checkpoint previousCheckpoint = checkpointSpawner.PeekCheckpoint();
+
+            player.transform.position = previousCheckpoint.transform.position;
         }
     }
 }
