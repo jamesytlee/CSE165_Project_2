@@ -10,14 +10,6 @@ public class AircraftController : MonoBehaviour
     public float speedMultiplier = 15f;
     public float maxSpeed = 50f;
 
-    private Vector3 handRotation; // initial rotation of the right hand
-    private float updateInterval = 1f; // update every 1 seconds
-
-    private void Start()
-    {
-        StartCoroutine(UpdateRotation());
-    }
-
     private void Update()
     {
         // Get the x-axis rotation of the throttle
@@ -44,22 +36,28 @@ public class AircraftController : MonoBehaviour
         transform.Translate(movement, Space.World);
     }
 
-    IEnumerator UpdateRotation()
+    // Functions for Controlling Pitch
+    public void PitchUp (float speed)
     {
-        while (true)
-        {
-            // Hand to Aircraft Rotation
-            // Store rotation of right hand
-            handRotation = rightHand.eulerAngles;
+        // Change the x rotation to pitch the aircraft up
+        transform.Rotate(speed, 0, 0);
+    }
 
-            // Convert hand rotation to aircraft rotation
-            Vector3 aircraftRotation = new Vector3(-handRotation.z, 0, handRotation.x);
+    public void PitchDown (float speed)
+    {
+        // Change the x rotation to pitch the aircraft down
+        transform.Rotate(-speed, 0, 0);
+    }
 
-            // Apply aircraft rotation
-            transform.eulerAngles = aircraftRotation;
-
-            // Wait for the defined interval before updating rotation again
-            yield return new WaitForSeconds(updateInterval);
-        }
+    // Functions for Controlling Roll
+    public void RollRight (float speed)
+    {
+        // Change the z rotation to roll the aircraft to the right
+        transform.Rotate(0, 0, -speed);
+    }
+    public void RollLeft(float speed)
+    {
+        // Change the z rotation to roll the aircraft to the left
+        transform.Rotate(0, 0, speed);
     }
 }
