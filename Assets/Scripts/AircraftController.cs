@@ -7,8 +7,8 @@ public class AircraftController : MonoBehaviour
     [SerializeField] public Transform throttle;
     [SerializeField] public Transform rightHand;
 
-    public float speedMultiplier = 15f;
-    public float maxSpeed = 50f;
+    public float speedMultiplier = 500f;
+    public float maxSpeed = 2000f;
 
     private void Update()
     {
@@ -20,11 +20,18 @@ public class AircraftController : MonoBehaviour
             throttleRotation -= 360;
         }
 
-        // Normalize the rotation value to the range of -1 to 1
-        float normalizedRotation = throttleRotation / 180f;
+        float targetSpeed = 0;
 
-        // Calculate the target speed based on the throttle rotation and speed multiplier
-        float targetSpeed = normalizedRotation * speedMultiplier;
+        // If rotation is between 0 and 90, speed up
+        if (throttleRotation <= 90 && throttleRotation > 0)
+        {
+            targetSpeed = (throttleRotation / 90f) * speedMultiplier;
+        }
+        // If rotation is between 0 and -90, speed down
+        else if (throttleRotation >= -90 && throttleRotation < 0)
+        {
+            targetSpeed = (throttleRotation / 90f) * speedMultiplier;
+        }
 
         // Limit the target speed to the maximum allowed speed
         targetSpeed = Mathf.Clamp(targetSpeed, -maxSpeed, maxSpeed);
@@ -49,8 +56,20 @@ public class AircraftController : MonoBehaviour
         transform.Rotate(-speed, 0, 0);
     }
 
+    // Functions for Controlling Yaw
+    public void YawRight (float speed)
+    {
+        // Change the y rotation to yaw the aircraft to the right
+        transform.Rotate(0, speed, 0);
+    }
+    public void YawLeft(float speed)
+    {
+        // Change the y rotation to yaw the aircraft to the left
+        transform.Rotate(0, -speed, 0);
+    }
+
     // Functions for Controlling Roll
-    public void RollRight (float speed)
+    public void RollRight(float speed)
     {
         // Change the z rotation to roll the aircraft to the right
         transform.Rotate(0, 0, -speed);
