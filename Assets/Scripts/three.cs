@@ -7,50 +7,31 @@ using TMPro;
 public class three : MonoBehaviour
 {
     public int countdownTime;
-    public Text countdownDisplay;
+    public TextMeshProUGUI countdownDisplay;
 
-    private void Start() {
+    void Start()
+    {
         StartCoroutine(CountdownToStart());
     }
 
-    IEnumerator CountdownToStart() {
-        while(countdownTime > 0) {
+    IEnumerator CountdownToStart()
+    {
+        while (countdownTime > 0)
+        {
             countdownDisplay.text = countdownTime.ToString();
             yield return new WaitForSeconds(1f);
             countdownTime--;
         }
-        countdownDisplay.text = "Go!";
-        GameController.instance.BeginGame();
+
+        countdownDisplay.text = "GO!";
+        
         yield return new WaitForSeconds(1f);
-        countdownDisplay.gameObject.SetActive(false);
-    }
-}
-public class GameController : MonoBehaviour
-{
-    public static GameController instance;
-
-    private bool canMove;
-
-    private void Awake()
-    {
-        if (instance == null)
+        countdownDisplay.text = "";
+        
+        if (countdownDisplay != null)
         {
-            instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
+            countdownDisplay.gameObject.SetActive(false);
         }
     }
-
-    public void BeginGame()
-    {
-        canMove = true;
-    }
-
-    public bool CanMove()
-    {
-        return canMove;
-    }
-
 }
+
