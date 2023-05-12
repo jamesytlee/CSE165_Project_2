@@ -10,7 +10,7 @@ public class AircraftController : MonoBehaviour
     private bool isLocked;
 
     public CheckpointSpawner checkpointManager;
-    private Transform lastCheckpoint;
+    public Transform lastCheckpoint;
 
     private void Start()
     {
@@ -45,7 +45,7 @@ public class AircraftController : MonoBehaviour
     /*
      * Function for aircraft respawn behavior
      */
-    private IEnumerator Respawn(Transform respawnCheckpoint)
+    public IEnumerator Respawn(Transform respawnCheckpoint)
     {
         // Lock the aircraft in position
         isLocked = true;
