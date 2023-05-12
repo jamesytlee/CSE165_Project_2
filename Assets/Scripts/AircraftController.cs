@@ -71,7 +71,7 @@ public class AircraftController : MonoBehaviour
     {
         if (checkpointManager != null && checkpointManager.checkpointQueue.Count > 0)
         {
-            // Enforces checkpoint order through comparing counter and ID
+            // Enforces checkpoint ordering through comparing counter with ID of checkpoint in queue & collision
             if (checkpointCounter == checkpointManager.PeekCheckpoint().ID && checkpointCounter == checkpointNumber)
             {
                 lastCheckpoint = checkpointManager.DequeueCheckpoint().position;
