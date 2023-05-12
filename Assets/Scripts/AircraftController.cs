@@ -5,12 +5,67 @@ using UnityEngine;
 public class AircraftController : MonoBehaviour
 {
     [SerializeField] public Transform throttle;
-    [SerializeField] public Transform rightHand;
+    public float speedMultiplier;
+    public float maxSpeed;
+    private bool isLocked;
 
-    public float speedMultiplier = 500f;
-    public float maxSpeed = 2000f;
+    public CheckpointSpawner checkpointManager;
+    private Transform lastCheckpoint;
 
-    private void Update()
+    private void Start()
+    {
+        if (checkpointManager != null && checkpointManager.checkpointQueue.Count > 0)
+        {
+            lastCheckpoint = checkpointManager.checkpointQueue.Peek().position;
+            StartCoroutine(Respawn(lastCheckpoint));
+        }
+        else
+        {
+            Debug.LogError("Checkpoint Manager is not assigned or checkpointQueue is empty.");
+        }
+    }
+
+    void Update()
+    {
+        if (isLocked)
+        {
+            return;
+        }
+        if (checkpointManager != null && checkpointManager.checkpointQueue.Count > 0)
+        {
+            lastCheckpoint = checkpointManager.checkpointQueue.Peek().position;
+            Throttle();
+        }
+        else
+        {
+            Debug.LogError("Checkpoint Manager is not assigned or checkpointQueue is empty.");
+        }
+    }
+
+    /*
+     * Function for aircraft respawn behavior
+     */
+    private IEnumerator Respawn(Transform respawnCheckpoint)
+    {
+        // Lock the aircraft in position
+        isLocked = true;
+
+        // Set the position
+        transform.position = respawnCheckpoint.position;
+        Debug.Log("The aircraft has spawned at checkpoint located at " + respawnCheckpoint.position);
+
+        // Wait for 3 seconds
+        yield return new WaitForSeconds(3f);
+        Debug.Log("3 seconds until aircraft can continue flight...");
+
+        // Unlock the aircraft after 3 seconds
+        isLocked = false;
+    }
+
+    /*
+     * Function for Throttle
+     */
+    public void Throttle()
     {
         // Get the x-axis rotation of the throttle
         float throttleRotation = throttle.localEulerAngles.x;
@@ -19,7 +74,6 @@ public class AircraftController : MonoBehaviour
         {
             throttleRotation -= 360;
         }
-
         float targetSpeed = 0;
 
         // If rotation is between 0 and 90, speed up
@@ -43,7 +97,9 @@ public class AircraftController : MonoBehaviour
         transform.Translate(movement, Space.World);
     }
 
-    // Functions for Controlling Pitch
+    /*
+     * Functions for Controlling Pitch, Yaw, and Roll
+     */
     public void PitchUp (float speed)
     {
         // Change the x rotation to pitch the aircraft up
@@ -56,7 +112,6 @@ public class AircraftController : MonoBehaviour
         transform.Rotate(-speed, 0, 0);
     }
 
-    // Functions for Controlling Yaw
     public void YawRight (float speed)
     {
         // Change the y rotation to yaw the aircraft to the right
@@ -68,7 +123,6 @@ public class AircraftController : MonoBehaviour
         transform.Rotate(0, -speed, 0);
     }
 
-    // Functions for Controlling Roll
     public void RollRight(float speed)
     {
         // Change the z rotation to roll the aircraft to the right

@@ -5,7 +5,7 @@ using UnityEngine;
 public class YawLeft : MonoBehaviour
 {
     public AircraftController aircraftController;
-    public float yawSpeed = 20f;
+    public float yawSpeed;
 
     public Material normalMaterial;     // normal material of button
     public Material pressedMaterial;    // pressed material of button

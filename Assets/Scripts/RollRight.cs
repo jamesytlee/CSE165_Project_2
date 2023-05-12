@@ -5,7 +5,7 @@ using UnityEngine;
 public class RollRight : MonoBehaviour
 {
     public AircraftController aircraftController;
-    public float rollSpeed = 20f;
+    public float rollSpeed;
 
     public Material normalMaterial;     // normal material of button
     public Material pressedMaterial;    // pressed material of button

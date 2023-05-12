@@ -5,7 +5,7 @@ using UnityEngine;
 public class PitchUp : MonoBehaviour
 {
     public AircraftController aircraftController;
-    public float pitchSpeed = 20f;
+    public float pitchSpeed;
 
     public Material normalMaterial;     // normal material of button
     public Material pressedMaterial;    // pressed material of button
