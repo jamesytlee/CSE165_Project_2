@@ -5,7 +5,7 @@ using UnityEngine;
 public class collision : MonoBehaviour
 {
     public GameObject player;
-    public string collisionTag = "Collision";
+    public string collisionTag = "collision";
 
     private CheckpointSpawner checkpointSpawner;
 
