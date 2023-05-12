@@ -26,7 +26,7 @@ public class PitchUp : MonoBehaviour
             // Pitch the aircraft down
             aircraftController.PitchUp(pitchSpeed);
 
-            // CHange the button's material to the pressed material
+            // Change the button's material to the pressed material
             meshRenderer.material = pressedMaterial;
         }
     }

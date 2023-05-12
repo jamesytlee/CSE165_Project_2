@@ -7,6 +7,9 @@ TagManager:
   - PlayerHand
   - Checkpoint
   - Map
+  - RoomLight
+  - SamplesInfoPanel
+  - Plane
   layers:
   - Default
   - TransparentFX

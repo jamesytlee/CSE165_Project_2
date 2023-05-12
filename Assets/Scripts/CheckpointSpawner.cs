@@ -20,6 +20,7 @@ public class CheckpointSpawner : MonoBehaviour
     [SerializeField] public GameObject checkpointSpherePrefab;
     [SerializeField] public TextAsset checkpointFile;
     public Queue<Checkpoint> checkpointQueue = new Queue<Checkpoint>();
+    public Material passedMaterial; // pressed material of checkpoint
     private float inchScale = 39.3701f;
 
     void Start()
@@ -85,6 +86,30 @@ public class CheckpointSpawner : MonoBehaviour
 
         Checkpoint passedCheckpoint = checkpointQueue.Dequeue();
         Debug.Log("Checkpoint " + passedCheckpoint.ID + " has been passed. Deleting it from queue.");
+
+        GameObject checkpointObject = GameObject.Find(passedCheckpoint.ID.ToString());
+
+        // If the GameObject exists
+        if (checkpointObject != null)
+        {
+            // Get the Renderer component 
+            Renderer rend = checkpointObject.GetComponent<Renderer>();
+
+            // If the Renderer exists
+            if (rend != null)
+            {
+                // Change the material
+                rend.material = passedMaterial;
+            } 
+            else
+            {
+                Debug.Log("Renderer not found on " + passedCheckpoint.ID);
+            }
+        } 
+        else
+        {
+            Debug.Log("GameObject not found: " + passedCheckpoint.ID);
+        }
 
         return passedCheckpoint;
     }
