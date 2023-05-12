@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class MeshColliderAdder : MonoBehaviour
 {
+    MeshCollider objectCollider;
+
     void Start()
     {
         // Get all child game objects
@@ -14,6 +16,10 @@ public class MeshColliderAdder : MonoBehaviour
             if (child.GetComponent<MeshFilter>() != null && child.GetComponent<MeshCollider>() == null)
             {
                 child.gameObject.AddComponent<MeshCollider>();
+                
+                objectCollider = child.GetComponent<MeshCollider>();
+                objectCollider.convex = true;
+                objectCollider.isTrigger = true;
             }
         }
     }
