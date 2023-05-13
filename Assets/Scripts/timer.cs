@@ -7,26 +7,33 @@ using TMPro;
 public class timer : MonoBehaviour
 {
     float currentTime = 0f;
+    float maxTime = 600f;
+    float delay = 3f;
+    bool startCounting = false;
 
-    [SerializeField] TextMeshProUGUI countdown;
-    [SerializeField] float startingTime;
+    [SerializeField] TextMeshProUGUI countup;
 
     // Start is called before the first frame update
     void Start()
     {
-        currentTime = startingTime;
+        StartCoroutine(WaitForSeconds(delay));
     }
 
     // Update is called once per frame
     void Update()
     {
-        currentTime -= 1 * Time.deltaTime;
-        countdown.text = currentTime.ToString("0");
-
-        if (currentTime <= 0)
+        if (startCounting && currentTime < maxTime)
         {
-            currentTime = 0;
-            Time.timeScale = 0;
+            currentTime += Time.deltaTime;
+            int minutes = Mathf.FloorToInt(currentTime / 60);
+            int seconds = Mathf.FloorToInt(currentTime % 60);
+            countup.text = string.Format("{0:00}:{1:00}", minutes, seconds);
         }
+    }
+
+    IEnumerator WaitForSeconds(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        startCounting = true;
     }
 }
