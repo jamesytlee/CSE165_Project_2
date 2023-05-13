@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class AircraftController : MonoBehaviour
 {
@@ -55,7 +56,7 @@ public class AircraftController : MonoBehaviour
         transform.position = respawnCheckpoint.position;
         transform.eulerAngles = new Vector3(0, 0, 0);
         Debug.Log("The aircraft has spawned at checkpoint located at " + respawnCheckpoint.position);
-
+        
         // Wait for 3 seconds
         yield return new WaitForSeconds(3f);
         Debug.Log("3 seconds until aircraft can continue flight...");
